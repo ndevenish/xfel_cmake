@@ -1,28 +1,3 @@
-cmake_minimum_required(VERSION 3.20...3.30 FATAL_ERROR)
-
-project(xfel LANGUAGES C CXX)
-
-# Add the included modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
-
-# General cmake environment configuration
-include(SetDefaultBuildRelWithDebInfo) # Default builds to release with debug info
-include(AlwaysColourCompilation) # Always show coloured compiler output
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json
-set(CMAKE_CXX_STANDARD 14)
-
-find_package(Python REQUIRED COMPONENTS Interpreter Development)
-set(Boost_USE_STATIC_LIBS OFF) # This is the default everywhere except Windows
-find_package(Boost COMPONENTS "python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}" REQUIRED)
-find_package(CCTBX REQUIRED COMPONENTS scitbx cctbx rstbx annlib OPTIONAL_COMPONENTS fast_linalg)
-find_package(DIALS REQUIRED)
-
-# Since it's a cctbx module, we need to add the parent to the PATH.
-CMAKE_PATH(GET CMAKE_CURRENT_SOURCE_DIR PARENT_PATH XFEL_PARENT_PATH)
-include_directories("${XFEL_PARENT_PATH}")
-
-# To make it easier to run in-place
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
 add_library(xfel_mono_sim SHARED mono_simulation/bandpass_gaussian.cpp mono_simulation/ccixfel_core.cpp)
 target_link_libraries(xfel_mono_sim PUBLIC CCTBX::scitbx CCTBX::rstbx CCTBX::annlib)
