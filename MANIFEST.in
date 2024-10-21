@@ -1,0 +1,11 @@
+include **/*.cfg
+include **/*.data
+include **/*.db
+include **/*.h
+include **/*.cpp
+include **/*.json
+include **/*.phil
+include **/*.png
+include **/*.sql
+include **/*.txt
+include **/*.cmake
